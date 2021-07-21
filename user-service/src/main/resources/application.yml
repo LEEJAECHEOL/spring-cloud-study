@@ -1,13 +1,15 @@
 server:
-  port: 9001
+  port: 0 # 랜덤 포트로 하겠다.
 
 spring:
   application:
     name: user-service
 
 eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.cloud.instance_id:${random.value}}
   client:
     register-with-eureka: true # 유레카에 등록할 할거다
     fetch-registry: true # 외부에서 검색 가능하게 할거다
-    service-url: # 유레카 서버 위치가 어디인지 지정함
+    service-url: # 유레카 서버 위치가 어디인지 지정
       defaultZone: http://127.0.0.1:8761/eureka

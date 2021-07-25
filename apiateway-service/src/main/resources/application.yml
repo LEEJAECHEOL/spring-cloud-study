@@ -29,3 +29,9 @@ spring:
 #            - AddRequestHeader=second-request, second-request-header2
 #            - AddResponseHeader=second-response, second-response-header2
             - CustomFilter
+      default-filters:
+        - name: GlobalFilter
+          args: # Global Filter 내 inner Class의 Config class 에 값이 들어감.
+            baseMessage: Spring Cloud Gateway Global Filter
+            preLogger: true
+            postLogger: true

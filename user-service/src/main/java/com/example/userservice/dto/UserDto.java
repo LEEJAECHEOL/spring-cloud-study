@@ -1,9 +1,11 @@
 package com.example.userservice.dto;
 
+import com.example.userservice.vo.ResponseOrder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,4 +17,6 @@ public class UserDto {
   private Date createdAt;
 
   private String encrptedyPwd;
+
+  private List<ResponseOrder> orders;
 }

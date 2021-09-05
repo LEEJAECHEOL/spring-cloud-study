@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    config:
+      uri: http://127.0.0.1:8888
+      name: ecommerce
+  profiles:
+    active: dev
+
+
+
+# 서버 정보가 바뀔때 마다 다시 가져오는 3가지 방법
+# 서버 재기동
+# Actuator refresh -> Spring Boot Actuator 사용
+# Spring cloud bus 사용

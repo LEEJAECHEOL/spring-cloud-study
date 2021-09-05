@@ -1,0 +1,20 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-service
+  profiles:
+    active: native # 로컬 파일 가져오겠다고 명시
+
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file://${user.home}/Desktop/spring-config/git-local-repo
+        git:
+          uri: https://github.com/LEEJAECHEOL/spring-cloud-config
+          # private 일 경우
+          #username:
+          #password:
+#          uri: file:///Users/lee/Desktop/spring-config/git-local-repo

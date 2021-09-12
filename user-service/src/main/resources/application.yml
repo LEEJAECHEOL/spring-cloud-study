@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: user-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672 # rabbitmq 서버를 실행하고 들어갈 때에는 15672이고 여기서는 5672임.
+    username: guest
+    password: guest
   h2:
     console:
       enabled: true
@@ -34,7 +39,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans
+        include: refresh, health, beans, busrefresh
 #token:
 #  expiration_time: 86400000
 #  secret: user_token

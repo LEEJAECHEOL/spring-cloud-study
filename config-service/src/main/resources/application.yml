@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: config-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672 # rabbitmq 서버를 실행하고 들어갈 때에는 15672이고 여기서는 5672임.
+    username: guest
+    password: guest
   profiles:
     active: native # 로컬 파일 가져오겠다고 명시
 
@@ -18,3 +23,9 @@ spring:
           #username:
           #password:
 #          uri: file:///Users/lee/Desktop/spring-config/git-local-repo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, busrefresh

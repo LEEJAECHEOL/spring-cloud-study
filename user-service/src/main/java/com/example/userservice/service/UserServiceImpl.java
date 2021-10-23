@@ -7,8 +7,11 @@ import com.example.userservice.jpa.UserRepository;
 import com.example.userservice.vo.ResponseOrder;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
@@ -32,6 +36,7 @@ public class UserServiceImpl implements UserService{
 //  private final RestTemplate restTemplate;
 //  private final Environment env;
   private final OrderServiceClient orderServiceClient;
+  private final CircuitBreakerFactory circuitBreakerFactory;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -100,7 +105,12 @@ public class UserServiceImpl implements UserService{
 //    }
 
     /* Error Decoder */
-    List<ResponseOrder> orderList = orderServiceClient.getOrders(userId);
+//    List<ResponseOrder> orderList = orderServiceClient.getOrders(userId);
+    log.info("Before call orders micro-service");
+    CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
+    List<ResponseOrder> orderList = circuitBreaker.run(() -> orderServiceClient.getOrders(userId),
+            throwable -> new ArrayList<>());
+    log.info("After called orders micro-service");
 
     userDto.setOrders(orderList);
 
